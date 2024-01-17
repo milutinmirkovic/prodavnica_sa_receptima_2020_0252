@@ -22,5 +22,7 @@ class KategorijaNamirniceSeeder extends Seeder
             ['naziv' => 'Slatki i slani konditori'],
             
         ]);
+
+    
     }
 }
