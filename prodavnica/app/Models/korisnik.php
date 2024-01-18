@@ -26,10 +26,4 @@ class korisnik extends Model
     ];
 }
 
-\App\Models\korisnik::create([
-    'Ime' => 'Nina',
-    'Prezime' => 'Omerovic',
-    'Adresa' => 'Trscanska 13',
-    'Email' => 'ninicomerovic2@gmail.com',
-    'broj_telefona' => '063120127'
-]);
+
