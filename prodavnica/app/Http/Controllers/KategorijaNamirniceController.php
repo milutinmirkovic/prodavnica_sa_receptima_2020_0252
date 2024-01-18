@@ -36,9 +36,10 @@ class KategorijaNamirniceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        
+        $id =  $request->input('id');
         $kategorija = kategorija_namirnice::find($id);
         if (!$kategorija) {
             return response()->json(['message' => 'Kategorija nije pronađena'], 404);

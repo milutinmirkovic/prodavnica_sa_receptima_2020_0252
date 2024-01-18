@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\recept;
 use Illuminate\Http\Request;
+use App\Models\kategorija_recept;
+
 
 class ReceptController extends Controller
 {
@@ -44,8 +46,9 @@ class ReceptController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Request $request)
     {
+        $id = $request->input('id');
         //
         $recept = recept::with('stavkaRecept.namirnica')->find($id);
         if (!$recept) {
@@ -123,4 +126,44 @@ class ReceptController extends Controller
  
         return response()->json(['message' => 'Namirnice su dodate u korpu']);
     }
+
+    public function pronadjiPoNazivu(Request $request)
+    {
+        $naziv = $request->input('naziv');
+        if(!$naziv){
+
+            return response()->json(['message' => 'Naziv recepta nije unet'], 404);
+        }
+        $recept =recept::where('naziv', $naziv)->first();
+        if (!$recept) {
+            return response()->json(['message' => 'Recept sa datim nazivom nije pronađen'], 404);
+        }
+        return response()->json($recept);
+    }
+
+    
+
+
+    public function namirnicePoKategoriji(Request $request)
+    {
+        $nazivKategorije = $request->input('naziv');
+
+       
+
+        if (!$nazivKategorije) {
+            return response()->json(['message' => 'Nije unet naziv kategorije'], 400);
+        }
+
+      
+        $kategorija = kategorija_recept::where('naziv', 'like', '%' . $nazivKategorije . '%')->first();
+    
+$recepti = recept::where('kategorija_recepta_id', $kategorija->id)->get();
+        if ($recepti->isEmpty()) {
+            return response()->json(['message' => 'Nema recepata u kategoriji ' . $nazivKategorije], 404);
+        }
+
+        return response()->json($recepti);
+    }
+
+
 }

@@ -16,7 +16,7 @@ class KategorijaNamirniceRecource extends JsonResource
     {
        return [
             'ID kategorije namirnice: ' => $this->id,
-            'Naziv kategorije namirnice' => $this->naziv,
+            'Naziv kategorije namirnice: ' => $this->naziv,
             
         ];
     }
