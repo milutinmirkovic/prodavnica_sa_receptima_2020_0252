@@ -21,7 +21,7 @@ class KorisnikResource extends JsonResource
             'Adresa: ' => $this->Adresa,
             'Email:' => $this->Email,
             'Broj telefona:' => $this->broj_telefona,
-            // Možete dodati i druge atribute ili relacije
+            
         ];
     }
 }

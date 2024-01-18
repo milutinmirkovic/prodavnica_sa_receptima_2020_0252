@@ -13,6 +13,8 @@ class StavkaKorpaController extends Controller
     public function index()
     {
         //
+        $stavkeKorpe = stavka_korpa::all();
+        return response()->json($stavkeKorpe);
     }
 
     /**
@@ -29,14 +31,27 @@ class StavkaKorpaController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'korpa_id' => 'required|exists:korpa,id',
+            'namirnica_id' => 'required|exists:namirnica,id',
+            'kolicina' => 'required',
+        ]);
+ 
+        $stavkaKorpe = stavka_korpa::create($request->all());
+        return response()->json($stavkaKorpe, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(stavka_korpa $stavka_korpa)
+    public function show($id)
     {
         //
+        $stavkaKorpe = stavka_korpa::find($id);
+        if (!$stavkaKorpe) {
+            return response()->json(['message' => 'Stavka korpe nije pronađena'], 404);
+        }
+        return response()->json($stavkaKorpe);
     }
 
     /**
@@ -50,16 +65,21 @@ class StavkaKorpaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, stavka_korpa $stavka_korpa)
+    public function update(Request $request, $id)
     {
         //
+        $stavkaKorpe = stavka_korpa::findOrFail($id);
+        $stavkaKorpe->update($request->all());
+        return response()->json($stavkaKorpe, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(stavka_korpa $stavka_korpa)
+    public function destroy($id)
     {
         //
+        stavka_korpa::destroy($id);
+        return response()->json(null, 204);
     }
 }

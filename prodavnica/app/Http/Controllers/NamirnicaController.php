@@ -13,6 +13,8 @@ class NamirnicaController extends Controller
     public function index()
     {
         //
+        $namirnice = namirnica::all();
+        return response()->json($namirnice);
     }
 
     /**
@@ -34,9 +36,14 @@ class NamirnicaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(namirnica $namirnica)
+    public function show($id)
     {
         //
+        $namirnica = namirnica::find($id);
+        if (!$namirnica) {
+            return response()->json(['message' => 'Namirnica nije pronađena'], 404);
+        }
+        return response()->json($namirnica);
     }
 
     /**
@@ -61,5 +68,16 @@ class NamirnicaController extends Controller
     public function destroy(namirnica $namirnica)
     {
         //
+    }
+
+    // Pronalaženje namirnice po nazivu
+    public function pronadjiPoNaziv(Request $request)
+    {
+        $naziv = $request->naziv;
+        $namirnice = namirnica::where('naziv', 'like', '%' . $naziv . '%')->get();
+        if ($namirnice->isEmpty()) {
+            return response()->json(['message' => 'Nema namirnica sa datim nazivom'], 404);
+        }
+        return response()->json($namirnice);
     }
 }

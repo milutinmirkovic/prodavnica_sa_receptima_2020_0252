@@ -13,6 +13,8 @@ class KategorijaReceptController extends Controller
     public function index()
     {
         //
+        $kategorije = kategorija_recept::all();
+        return response()->json($kategorije);
     }
 
     /**
@@ -34,9 +36,15 @@ class KategorijaReceptController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(kategorija_recept $kategorija_recept)
+    public function show($id)
     {
         //
+        $kategorija = kategorija_recept::find($id);
+        if (!$kategorija) {
+            return response()->json(['message' => 'Kategorija recepta nije pronađena'], 404);
+        }
+        return response()->json($kategorija);
+
     }
 
     /**
@@ -61,5 +69,26 @@ class KategorijaReceptController extends Controller
     public function destroy(kategorija_recept $kategorija_recept)
     {
         //
+    }
+
+    // Pronalaženje kategorije recepta po nazivu
+    public function pronadjiPoNazivuKat(Request $request)
+    {
+        $naziv = $request->naziv;
+        $kategorija = kategorija_recept::where('naziv', $naziv)->first();
+        if (!$kategorija) {
+            return response()->json(['message' => 'Kategorija recepta sa datim nazivom nije pronađena'], 404);
+        }
+        return response()->json($kategorija);
+    }
+
+    // Prikaz svih recepata koji sadrže određenu namirnicu
+    public function pronadjiPoNamirnici($namirnicaId)
+    {
+        $recepti = recept::whereHas('stavkaRecept', function ($query) use ($namirnicaId) {
+            $query->where('namirnica_id', $namirnicaId);
+        })->get();
+ 
+        return response()->json($recepti);
     }
 }

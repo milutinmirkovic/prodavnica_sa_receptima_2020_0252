@@ -13,6 +13,8 @@ class ReceptController extends Controller
     public function index()
     {
         //
+        $recepti = recept::with('stavkaRecept.namirnica')->get();
+        return response()->json($recepti);
     }
 
     /**
@@ -29,14 +31,27 @@ class ReceptController extends Controller
     public function store(Request $request)
     {
         //
+        $validatedData = $request->validate([
+            'naziv' => 'required',
+            'tekst' => 'required',
+            'kategorija_recepta_id' => 'required'
+        ]);
+ 
+        $recept = recept::create($validatedData);
+        return response()->json($recept, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(recept $recept)
+    public function show($id)
     {
         //
+        $recept = recept::with('stavkaRecept.namirnica')->find($id);
+        if (!$recept) {
+            return response()->json(['message' => 'Recept nije pronađen'], 404);
+        }
+        return response()->json($recept);
     }
 
     /**
@@ -50,9 +65,12 @@ class ReceptController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, recept $recept)
+    public function update(Request $request, $id)
     {
         //
+        $recept = recept::findOrFail($id);
+        $recept->update($request->all());
+        return response()->json($recept, 200);
     }
 
     /**
@@ -61,5 +79,48 @@ class ReceptController extends Controller
     public function destroy(recept $recept)
     {
         //
+        recept::destroy($id);
+        return response()->json(null, 204);
+    }
+
+    // Prikaz svih recepta koji pripadaju određenoj kategoriji
+    public function findByKategorija($kategorijaId)
+    {
+        $recepti = recept::where('kategorija_recepta_id', $kategorijaId)->with('stavkaRecept.namirnica')->get();
+        return response()->json($recepti);
+    }
+
+    // Prikaz svih recepta koji sadrže određenu namirnicu
+    public function findByNamirnica($namirnicaId)
+    {
+        $recepti = recept::whereHas('stavkaRecept', function ($query) use ($namirnicaId) {
+            $query->where('namirnica_id', $namirnicaId);
+        })->with('stavkaRecept.namirnica')->get();
+ 
+        return response()->json($recepti);
+    }
+
+    // Dodavanje svih namirnica iz recepta u korpu
+    public function dodajNamirniceUKorpu($receptId, $korpaId)
+    {
+        $recept = recept::with('stavkaRecept.namirnica')->find($receptId);
+        if (!$recept) {
+            return response()->json(['message' => 'Recept nije pronađen'], 404);
+        }
+ 
+        $korpa = korpa::find($korpaId);
+        if (!$korpa) {
+            return response()->json(['message' => 'Korpa nije pronađena'], 404);
+        }
+ 
+        foreach ($recept->stavkaRecept as $stavka) {
+            stavka_korpa::create([
+                'korpa_id' => $korpa->id,
+                'namirnica_id' => $stavka->namirnica_id,
+                'kolicina' => $stavka->kolicina_namirnice
+            ]);
+        }
+ 
+        return response()->json(['message' => 'Namirnice su dodate u korpu']);
     }
 }

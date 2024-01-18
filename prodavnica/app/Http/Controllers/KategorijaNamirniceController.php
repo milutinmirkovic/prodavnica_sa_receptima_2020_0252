@@ -13,6 +13,8 @@ class KategorijaNamirniceController extends Controller
     public function index()
     {
         //
+        $kategorije = kategorija_namirnice::all();
+        return response()->json($kategorije);
     }
 
     /**
@@ -34,9 +36,14 @@ class KategorijaNamirniceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(kategorija_namirnice $kategorija_namirnice)
+    public function show($id)
     {
         //
+        $kategorija = kategorija_namirnice::find($id);
+        if (!$kategorija) {
+            return response()->json(['message' => 'Kategorija nije pronađena'], 404);
+        }
+        return response()->json($kategorija);
     }
 
     /**
@@ -62,4 +69,16 @@ class KategorijaNamirniceController extends Controller
     {
         //
     }
+
+    // Pronalaženje kategorije po nazivu
+    public function pronadjiPoNazivu(Request $request)
+    {
+        $naziv = $request->naziv;
+        $kategorija = kategorija_namirnice::where('naziv', $naziv)->first();
+        if (!$kategorija) {
+            return response()->json(['message' => 'Kategorija sa datim nazivom nije pronađena'], 404);
+        }
+        return response()->json($kategorija);
+    }
 }
+

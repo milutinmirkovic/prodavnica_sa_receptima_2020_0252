@@ -13,6 +13,8 @@ class KorisnikController extends Controller
     public function index()
     {
         //
+        $korisnici = korisnik::all();
+        return response()->json($korisnici);
     }
 
     /**
@@ -34,9 +36,14 @@ class KorisnikController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(korisnik $korisnik)
+    public function show($id)
     {
         //
+        $korisnik = korisnik::find($id);
+        if (!$korisnik) {
+            return response()->json(['message' => 'Korisnik nije pronađen'], 404);
+        }
+        return response()->json($korisnik);
     }
 
     /**

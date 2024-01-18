@@ -13,6 +13,8 @@ class KorpaController extends Controller
     public function index()
     {
         //
+        $korpe = korpa::with('stavkaKorpa.namirnica')->get();
+        return response()->json($korpe);
     }
 
     /**
@@ -34,9 +36,14 @@ class KorpaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(korpa $korpa)
+    public function show($id)
     {
         //
+        $korpa = korpa::with('stavkaKorpa.namirnica')->find($id);
+        if (!$korpa) {
+            return response()->json(['message' => 'Korpa nije pronađena'], 404);
+        }
+        return response()->json($korpa);
     }
 
     /**
@@ -61,5 +68,23 @@ class KorpaController extends Controller
     public function destroy(korpa $korpa)
     {
         //
+    }
+
+    // Ažuriranje ukupne cene korpe
+    public function ukupnaCena($id)
+    {
+        $korpa = korpa::with('stavkaKorpa.namirnica')->find($id);
+        if (!$korpa) {
+            return response()->json(['message' => 'Korpa nije pronađena'], 404);
+        }
+ 
+        $ukupnaCena = $korpa->stavkaKorpa->sum(function ($stavka) {
+            return $stavka->namirnica->cena * $stavka->kolicina;
+        });
+ 
+        $korpa->ukupna_cena = $ukupnaCena;
+        $korpa->save();
+ 
+        return response()->json($korpa);
     }
 }
