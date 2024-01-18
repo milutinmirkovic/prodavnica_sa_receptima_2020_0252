@@ -12,7 +12,7 @@ class KategorijaNamirniceController extends Controller
      */
     public function index()
     {
-        //
+       
         $kategorije = kategorija_namirnice::all();
         return response()->json($kategorije);
     }
@@ -73,7 +73,11 @@ class KategorijaNamirniceController extends Controller
     // Pronalaženje kategorije po nazivu
     public function pronadjiPoNazivu(Request $request)
     {
-        $naziv = $request->naziv;
+        $naziv = $request->input('naziv');
+        if(!$naziv){
+
+            return response()->json(['message' => 'Naziv kategorije nije unet'], 404);
+        }
         $kategorija = kategorija_namirnice::where('naziv', $naziv)->first();
         if (!$kategorija) {
             return response()->json(['message' => 'Kategorija sa datim nazivom nije pronađena'], 404);

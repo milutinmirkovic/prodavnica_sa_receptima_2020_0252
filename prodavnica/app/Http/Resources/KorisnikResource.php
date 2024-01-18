@@ -12,6 +12,8 @@ class KorisnikResource extends JsonResource
      *
      * @return array<string, mixed>
      */
+
+     public static $wrap = 'Korisnici';
     public function toArray(Request $request): array
     {
         return [
