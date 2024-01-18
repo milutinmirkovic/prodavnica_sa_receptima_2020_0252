@@ -36,9 +36,10 @@ class KorpaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Request $request)
     {
         //
+        $id=$request->id;
         $korpa = korpa::with('stavkaKorpa.namirnica')->find($id);
         if (!$korpa) {
             return response()->json(['message' => 'Korpa nije pronađena'], 404);
@@ -71,15 +72,16 @@ class KorpaController extends Controller
     }
 
     // Ažuriranje ukupne cene korpe
-    public function ukupnaCena($id)
+    public function ukupnaCena(Request $request)
     {
+        $id = $request->id;
         $korpa = korpa::with('stavkaKorpa.namirnica')->find($id);
         if (!$korpa) {
             return response()->json(['message' => 'Korpa nije pronađena'], 404);
         }
  
         $ukupnaCena = $korpa->stavkaKorpa->sum(function ($stavka) {
-            return $stavka->namirnica->cena * $stavka->kolicina;
+            return $stavka->namirnica->cena;
         });
  
         $korpa->ukupna_cena = $ukupnaCena;

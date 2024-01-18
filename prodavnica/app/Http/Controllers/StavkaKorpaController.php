@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\stavka_korpa;
 use Illuminate\Http\Request;
+use App\Models\korpa;
 
 class StavkaKorpaController extends Controller
 {
@@ -44,9 +45,10 @@ class StavkaKorpaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Request $request)
     {
         //
+        $id = $request->id;
         $stavkaKorpe = stavka_korpa::find($id);
         if (!$stavkaKorpe) {
             return response()->json(['message' => 'Stavka korpe nije pronađena'], 404);
@@ -76,9 +78,10 @@ class StavkaKorpaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+        $id=$request->id;
         stavka_korpa::destroy($id);
         return response()->json(null, 204);
     }

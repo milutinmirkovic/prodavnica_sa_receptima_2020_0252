@@ -14,5 +14,9 @@ class KorpaSeeder extends Seeder
     public function run(): void
     {
         
+        DB::table('korpa')->insert([
+            'korisnik_id' => 1,
+            'ukupna_cena' => 0, 
+        ]);
     }
 }

@@ -104,7 +104,7 @@ class NamirnicaController extends Controller
             $query->where('kategorija_namirnica_id', 'like', '%' . $idKat . '%');
         })->get();
 */
-$namirnice = namirnica::where('kategorija_namirnica_id', $kategorija->id)->get();
+        $namirnice = namirnica::where('kategorija_namirnica_id', $kategorija->id)->get();
         if ($namirnice->isEmpty()) {
             return response()->json(['message' => 'Nema namirnica u kategoriji ' . $nazivKategorije], 404);
         }

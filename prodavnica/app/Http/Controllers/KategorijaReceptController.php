@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\kategorija_recept;
 use Illuminate\Http\Request;
+use App\Models\recept;
+use App\Models\namirnica;
 
 class KategorijaReceptController extends Controller
 {
@@ -36,9 +38,10 @@ class KategorijaReceptController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Request $request)
     {
         //
+        $id=$request->input('id');
         $kategorija = kategorija_recept::find($id);
         if (!$kategorija) {
             return response()->json(['message' => 'Kategorija recepta nije pronađena'], 404);
@@ -83,11 +86,16 @@ class KategorijaReceptController extends Controller
     }
 
     // Prikaz svih recepata koji sadrže određenu namirnicu
-    public function pronadjiPoNamirnici($namirnicaId)
+    public function pronadjiPoNamirnici(Request $request)
     {
-        $recepti = recept::whereHas('stavkaRecept', function ($query) use ($namirnicaId) {
-            $query->where('namirnica_id', $namirnicaId);
+        $namirnicanaz=$request->naziv;
+        $namirnica = namirnica::where('naziv', 'like', '%' . $namirnicanaz . '%')->first();
+        $namirnicaid=$namirnica->id;
+
+        $recepti = recept::whereHas('stavkaRecept', function ($query) use ($namirnicaid) {
+            $query->where('namirnica_id', $namirnicaid);
         })->get();
+       
  
         return response()->json($recepti);
     }

@@ -13,6 +13,25 @@ class StavkaKorpaSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+
+ 
+        DB::table('stavka_korpa')->insert([
+        [
+            'korpa_id' => 1,
+            'namirnica_id' => 5,
+        ],
+        [
+            'korpa_id' => 1,
+            'namirnica_id' => 13,
+        ],
+        [
+            'korpa_id' => 1,
+            'namirnica_id' => 14,
+        ],
+        [
+            'korpa_id' => 1,
+            'namirnica_id' => 15,
+        ]
+        ]);
     }
 }

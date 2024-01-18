@@ -14,12 +14,9 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         
-        $this->call(KategorijaNamirniceSeeder::class);
-        $this->call(KategorijaReceptSeeder::class);
-        $this->call(KorisnikSeeder::class);
-        $this->call(NamirnicaSeeder::class);
-        $this->call(ReceptSeeder::class);
-        $this->call(StavkaReceptSeeder::class);
+        $this->call(KorpaSeeder::class);
+        $this->call(StavkaKorpaSeeder::class);
+        
 
     }
 }
