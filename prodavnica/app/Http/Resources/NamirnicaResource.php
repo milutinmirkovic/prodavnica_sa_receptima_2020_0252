@@ -14,6 +14,14 @@ class NamirnicaResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'Šifra namirnice: ' => $this->id,
+            'Naziv:' => $this->naziv,
+            'Opis: ' => $this->opis,
+            'Cena: ' => $this->cena,
+            'Veličina pakovanja: ' => $this->velicina_pakovanja,
+            'Kategorija namirnice: ' => new KategorijaNamirniceResource($this->kategorijaNamirnice),
+            
+        ];
     }
 }

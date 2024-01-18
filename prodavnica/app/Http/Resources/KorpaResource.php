@@ -14,6 +14,14 @@ class KorpaResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'Sifra korpe: ' => $this->id,
+            'ID korisnika: ' => $this->korisnik_id,
+            'Ukupna cena: ' => $this->ukupna_cena,
+            'Napravljena: ' => $this->created_at,
+            'Promenjena: ' => $this->updated_at,
+            
+            'Sadržaj korpe: ' => StavkaKorpaResource::collection($this->stavkaKorpa),
+        ];
     }
 }

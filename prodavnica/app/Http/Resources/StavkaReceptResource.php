@@ -14,6 +14,15 @@ class StavkaReceptResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            
+            
+            'Namirnica: ' => new NamirnicaResource($this->namirnica->naziv),
+            
+            'Količina namirnice: ' => $this->kolicina_namirnice,
+           
+           
+            
+        ];
     }
 }

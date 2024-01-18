@@ -14,6 +14,14 @@ class KorisnikResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'ID korisnika: ' => $this->id,
+            'Ime:' => $this->Ime,
+            'Prezime: ' => $this->Prezime,
+            'Adresa: ' => $this->Adresa,
+            'Email:' => $this->Email,
+            'Broj telefona:' => $this->broj_telefona,
+            // Možete dodati i druge atribute ili relacije
+        ];
     }
 }

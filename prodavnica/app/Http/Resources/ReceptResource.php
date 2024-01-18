@@ -14,6 +14,12 @@ class ReceptResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'Šifra recepta: ' => $this->id,
+            'Naziv: ' => $this->naziv,
+            'Tekst recepta: ' => $this->tekst,
+          
+            'Kategorija recepta: ' => new KategorijaReceptResource($this->kategorijaRecept),
+        ];
     }
 }
