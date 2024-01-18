@@ -36,9 +36,9 @@ class KorisnikController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $id = $request->input('id');
         $korisnik = korisnik::find($id);
         if (!$korisnik) {
             return response()->json(['message' => 'Korisnik nije pronađen'], 404);
@@ -69,4 +69,8 @@ class KorisnikController extends Controller
     {
         //
     }
+
+
+    
+
 }

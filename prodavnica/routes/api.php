@@ -3,11 +3,17 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KorisnikController;
+
+
+
+
 use App\Http\Controllers\NamirnicaController;
 use App\Http\Controllers\KategorijaNamirniceController;
 use App\Http\Controllers\KategorijaReceptController;
 use App\Http\Controllers\KorpaController;
 use App\Http\Controllers\StavkaKorpaController;
+use App\Http\Controllers\ReceptController;
+use App\Http\Controllers\KategorijaReceptController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +29,7 @@ use App\Http\Controllers\StavkaKorpaController;
 //NAMIRNICA
 
 Route::get('/korisnici', [KorisnikController::class, 'index']);
+Route::get('/korisnici/id', [KorisnikController::class, 'show']);
 
 // Get all namirnice
 Route::get('/namirnice', [NamirnicaController::class, 'index']);
@@ -45,6 +52,13 @@ Route::get('/namirnice/kategorija', [NamirnicaController::class, 'namirnicePoKat
 
 
 Route::get('/kategorijaNamirnice/pronadjiPoNazivu',[KategorijaNamirniceController::class,'pronadjiPoNazivu']);
+Route::get('/kategorijaNamirnice/pronadjiPoIDu',[KategorijaNamirniceController::class,'show']);
+
+Route::get('/recept/id',[ReceptController::class,'show']);
+Route::get('/recept/naziv', [ReceptController::class, 'pronadjiPoNazivu']);
+Route::get('/recept/kategorija', [ReceptController::class, 'namirnicePoKategoriji']);
+
+
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
