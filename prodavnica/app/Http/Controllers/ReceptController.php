@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\recept;
 use Illuminate\Http\Request;
 use App\Models\kategorija_recept;
+use PDF;
 
 
 class ReceptController extends Controller
@@ -163,6 +164,17 @@ $recepti = recept::where('kategorija_recepta_id', $kategorija->id)->get();
         }
 
         return response()->json($recepti);
+    }
+
+
+    public function exportToPdf(Request $request)
+    {
+            $id = $request->id;
+
+        $recept = Recept::findOrFail($id);
+
+        $pdf = PDF::loadView('recept_pdf', ['recept' => $recept]);
+        return $pdf->download('recept-' . $recept->id . '.pdf');
     }
 
 

@@ -97,3 +97,8 @@ Route::post('/login', [AuthController::class, 'login']);
 //LOGOUT
 //Route::post('/logout', [AuthController::class, 'logout']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+
+
+//EXPORT 
+Route::get('/recepti/pdf', [ReceptController::class, 'exportToPdf']);
+
