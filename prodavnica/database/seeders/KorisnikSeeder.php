@@ -19,14 +19,16 @@ class KorisnikSeeder extends Seeder
                 'Prezime' => 'Mirković',
                 'Adresa' => 'Luke Vukalovica 7',
                 'Email' => 'milutin.mirkovic1.mm@gmail.com',
-                'broj_telefona' => '0640854858'
+                'broj_telefona' => '0640854858',
+                'password' => 'ninomi'
             ],
             [
                 'Ime' => 'Nina',
                 'Prezime' => 'Omerović',
                 'Adresa' => 'Tršćanska 13',
                 'Email' => 'ninicomerovic2@gmail.com',
-                'broj_telefona' => '0631201217'
+                'broj_telefona' => '0631201217',
+                'password' => 'ninomi'
             ],
         ]);
     }

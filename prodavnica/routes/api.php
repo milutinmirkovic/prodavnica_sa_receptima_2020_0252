@@ -13,7 +13,7 @@ use App\Http\Controllers\KategorijaReceptController;
 use App\Http\Controllers\KorpaController;
 use App\Http\Controllers\StavkaKorpaController;
 use App\Http\Controllers\ReceptController;
-use App\Http\Controllers\KategorijaReceptController;
+
 
 /*
 |--------------------------------------------------------------------------
