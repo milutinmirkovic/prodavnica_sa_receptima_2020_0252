@@ -9,7 +9,7 @@ use App\Http\Controllers\KategorijaReceptController;
 use App\Http\Controllers\KorpaController;
 use App\Http\Controllers\StavkaKorpaController;
 use App\Http\Controllers\ReceptController;
-
+use App\Http\Controllers\API\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,4 +88,12 @@ Route::get('/stavkaKorpa/update', [StavkaKorpaController::class, 'update']);
 
 Route::get('/stavkaKorpa/destroy', [StavkaKorpaController::class, 'destroy']);
 
+//REGISTRACIJA
+Route::post('/registracija', [AuthController::class, 'registracija']);
 
+//LOGIN
+Route::post('/login', [AuthController::class, 'login']);
+
+//LOGOUT
+//Route::post('/logout', [AuthController::class, 'logout']);
+Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
