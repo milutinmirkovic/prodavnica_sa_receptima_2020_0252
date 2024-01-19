@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('namirnica', function (Blueprint $table) {
-            $table->double('velicina_pakovanja')->nullable()->after('cena');
+        Schema::table('korisnik', function (Blueprint $table) {
+            $table->string('password');
         });
     }
 
@@ -21,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('namirnica', function (Blueprint $table) {
-            $table->dropColumn('velicina_pakovanja'); 
-            
+        Schema::table('korisnik', function (Blueprint $table) {
+            $table->dropColumn('password'); 
         });
     }
 };
