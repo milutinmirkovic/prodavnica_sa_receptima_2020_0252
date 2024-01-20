@@ -22,6 +22,12 @@ use App\Http\Controllers\API\AuthController;
 |
 */
 
+
+//KATEGORIJA NAMIRNICE
+
+Route::resource('/kategorijeNamirnica', KategorijaNamirniceController::class);
+
+
 //NAMIRNICA
 
 Route::get('/korisnici', [KorisnikController::class, 'index']);
@@ -33,7 +39,7 @@ Route::resource('/namirnice', NamirnicaController::class);
 
 
 Route::get('/kategorijaNamirnice/pronadjiPoNazivu',[KategorijaNamirniceController::class,'pronadjiPoNazivu']);
-Route::get('/kategorijaNamirnice/pronadjiPoIDu',[KategorijaNamirniceController::class,'show']);
+
 
 Route::get('/recept/id',[ReceptController::class,'show']);
 Route::get('/recept/naziv', [ReceptController::class, 'pronadjiPoNazivu']);
