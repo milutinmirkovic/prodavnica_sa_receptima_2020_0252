@@ -35,7 +35,7 @@ class NamirnicaController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            '   ' => 'required|string|max:255', 
+            'naziv' => 'required|string|max:255', 
             'opis' => 'required|string|max:255', 
             'cena' => 'required|numeric', 
             'velicina_pakovanja' => 'required|integer', 
@@ -67,7 +67,7 @@ class NamirnicaController extends Controller
 
 
 
-    public function update(Request $request, $id )
+    public function update(Request $request,  $namirnica)
     {
         
         $validator = Validator::make($request->all(), [

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\stavka_korpa;
 use Illuminate\Http\Request;
 use App\Models\korpa;
+use Validator;
 
 class StavkaKorpaController extends Controller
 {
@@ -18,33 +19,6 @@ class StavkaKorpaController extends Controller
         return response()->json($stavkeKorpe);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-        $request->validate([
-            'korpa_id' => 'required|exists:korpa,id',
-            'namirnica_id' => 'required|exists:namirnica,id',
-            'kolicina' => 'required',
-        ]);
- 
-        $stavkaKorpe = stavka_korpa::create($request->all());
-        return response()->json($stavkaKorpe, 201);
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Request $request)
     {
         //
@@ -56,31 +30,37 @@ class StavkaKorpaController extends Controller
         return response()->json($stavkaKorpe);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(stavka_korpa $stavka_korpa)
+    
+    public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'korpa_id' => 'required|integer',
+            'namirnica_id' => 'required|integer'
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+    
+        $stavka = new stavka_korpa();
+        $stavka->korpa_id = $request->korpa_id;
+        $stavka->namirnica_id = $request->namirnica_id;
+        
+        $stavka->save();
+    
+        return response()->json(['message' => 'Stavka je uspešno dodata u korpu', 'stavka' => $stavka], 201);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)
-    {
-        //
-        $stavkaKorpe = stavka_korpa::findOrFail($id);
-        $stavkaKorpe->update($request->all());
-        return response()->json($stavkaKorpe, 200);
-    }
+    
+   
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
+    
+
+  
     public function destroy(Request $request)
     {
-        //
+        
         $id=$request->id;
         stavka_korpa::destroy($id);
         return response()->json(null, 204);

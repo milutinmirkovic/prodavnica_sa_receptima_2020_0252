@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\korpa;
 use Illuminate\Http\Request;
+use Validator;
 
 class KorpaController extends Controller
 {
@@ -13,62 +14,61 @@ class KorpaController extends Controller
     public function index()
     {
         //
-        $korpe = korpa::with('stavkaKorpa.namirnica')->get();
+        $korpe = korpa::all();
         return response()->json($korpe);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Request $request)
     {
         //
         $id=$request->id;
-        $korpa = korpa::with('stavkaKorpa.namirnica')->find($id);
+        $korpa = korpa::find($id);
         if (!$korpa) {
             return response()->json(['message' => 'Korpa nije pronađena'], 404);
         }
         return response()->json($korpa);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(korpa $korpa)
+
+   
+    public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'korisnik_id' => 'required|integer',
+            'ukupna_cena' => 'required|numeric'
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400); 
+        }
+    
+        $korpa = new korpa();
+        $korpa->korisnik_id = $request->korisnik_id;
+        $korpa->ukupna_cena = $request->ukupna_cena;
+    
+        $korpa->save();
+    
+        return response()->json(['Uspešno kreirana nova korpa', 'korpa' => $korpa], 201);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, korpa $korpa)
+    
+    
+    
+   
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(korpa $korpa)
-    {
-        //
+        $korpa = korpa::find($id);
+    
+        if (!$korpa) {
+            return response()->json(['message' => 'Korpa nije pronađena'], 404);
+        }
+    
+        
+        $korpa->stavkaKorpa()->delete();
+    
+        $korpa->delete();
+    
+        return response()->json(['message' => 'Korpa je uspešno obrisana']);
     }
 
     // Ažuriranje ukupne cene korpe
@@ -89,4 +89,34 @@ class KorpaController extends Controller
  
         return response()->json($korpa);
     }
+
+
+    public function prikaziKorpu(Request $request)
+    {
+            $korpaId=$request->id;
+
+        $korpa = korpa::with('stavkaKorpa')->find($korpaId);
+    
+        if (!$korpa) {
+            return response()->json(['message' => 'Korpa nije pronađena'], 404);
+        }
+    
+        $ukupnaCena = 0;
+    foreach ($korpa->stavkaKorpa as $stavka) {
+        if ($stavka->namirnica) {
+            $ukupnaCena += $stavka->namirnica->cena; 
+        }
+    }
+    
+        return response()->json([
+            'stavkeKorpe' => $korpa->stavkaKorpa,
+            'ukupnaCena' => $ukupnaCena
+        ]);
+    }
+
+
+    
+
+
+
 }

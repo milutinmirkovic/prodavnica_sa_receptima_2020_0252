@@ -88,16 +88,24 @@ Route::get('/korpa/id', [KorpaController::class, 'show']);
 
 Route::get('/korpa/cena', [KorpaController::class, 'ukupnaCena']);
 
+Route::post('/korpa/napravi', [KorpaController::class, 'store']);
+
+Route::get('/korpa/prikaziKorpu', [KorpaController::class, 'prikaziKorpu']);
+
+Route::delete('/korpa/obrisi/{id}', [KorpaController::class, 'destroy']);
+
+
+
 //STAVKA KORPA
 Route::get('/stavkaKorpa', [StavkaKorpaController::class, 'index']);
 
 Route::get('/stavkaKorpa/id', [StavkaKorpaController::class, 'show']);
 
-Route::get('/stavkaKorpa/store', [StavkaKorpaController::class, 'store']);
+Route::post('/stavkaKorpa/napravi', [StavkaKorpaController::class, 'store']);
 
-Route::get('/stavkaKorpa/update', [StavkaKorpaController::class, 'update']);
 
-Route::get('/stavkaKorpa/destroy', [StavkaKorpaController::class, 'destroy']);
+
+Route::get('/stavkaKorpa/obrisi', [StavkaKorpaController::class, 'destroy']);
 
 //REGISTRACIJA
 Route::post('/registracija', [AuthController::class, 'registracija']);
