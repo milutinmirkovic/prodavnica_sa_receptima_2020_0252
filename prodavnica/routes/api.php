@@ -10,6 +10,7 @@ use App\Http\Controllers\KorpaController;
 use App\Http\Controllers\StavkaKorpaController;
 use App\Http\Controllers\ReceptController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\StavkaReceptController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,9 +68,7 @@ Route::put('/recept/izmeni/{id}', [ReceptController::class, 'update']);//radi
 Route::delete('/recept/obrisi/{id}', [ReceptController::class, 'destroy']);//radi
 Route::get('/recept/namirnica', [ReceptController::class, 'pronadjiPoNamirnici']);//radi
 Route::get('/recept/dodaj', [ReceptController::class, 'dodajNamirniceUKorpu']);//radi
-Route::get('/recept/id',[ReceptController::class,'show']);
-Route::get('/recept/naziv', [ReceptController::class, 'pronadjiPoNazivu']);
-Route::get('/recept/kategorija', [ReceptController::class, 'namirnicePoKategoriji']);
+
 
 
 
@@ -133,3 +132,9 @@ Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logo
 //EXPORT 
 Route::get('/recepti/pdf', [ReceptController::class, 'exportToPdf']);
 
+//STAVKA RECEPT
+Route::get('/stavkaRecept', [StavkaReceptController::class, 'index']);
+Route::post('/stavkaRecept/sacuvaj', [StavkaReceptController::class, 'store']);
+Route::get('/stavkaRecept/prikazi', [StavkaReceptController::class, 'show']);
+Route::put('/stavkaRecept/izmeni/{id}', [StavkaReceptController::class, 'update']);
+Route::delete('/stavkaRecept/izbrisi/{id}', [StavkaReceptController::class, 'destroy']);

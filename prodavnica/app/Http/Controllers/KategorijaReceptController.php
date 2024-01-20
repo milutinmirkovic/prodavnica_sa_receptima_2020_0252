@@ -58,8 +58,7 @@ class KategorijaReceptController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'naziv' => 'required|string|max:255', 
-            
-           
+ 
         ]);
        
         if ($validator->fails()) {
