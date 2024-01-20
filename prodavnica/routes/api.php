@@ -33,13 +33,14 @@ Route::get('/kategorijaNamirnice/pronadjiPoNazivu',[KategorijaNamirniceControlle
 
 
 
-Route::post('/namirnice/dodaj', [NamirnicaController::class, 'store']); //radi
-Route::delete('/namirnice/obrisi/{id}', [NamirnicaController::class, 'destroy']); //radi
+
+
 Route::get('/namirnice', [NamirnicaController::class, 'index']); //raadi
 Route::get('/namirnice/nadjiID', [NamirnicaController::class, 'show']); //radi
 Route::get('/namirnice/naziv', [NamirnicaController::class, 'pronadjiPoNaziv']);//radi
 Route::get('/namirnice/kategorija', [NamirnicaController::class, 'namirnicePoKategoriji']);//radi
-Route::put('/namirnice/izmeni/{id}', [NamirnicaController::class, 'update']); //radi
+
+
 
 
 
@@ -67,9 +68,7 @@ Route::put('/recept/izmeni/{id}', [ReceptController::class, 'update']);//radi
 Route::delete('/recept/obrisi/{id}', [ReceptController::class, 'destroy']);//radi
 Route::get('/recept/namirnica', [ReceptController::class, 'pronadjiPoNamirnici']);//radi
 Route::get('/recept/dodaj', [ReceptController::class, 'dodajNamirniceUKorpu']);//radi
-Route::get('/recept/id',[ReceptController::class,'show']);
-Route::get('/recept/naziv', [ReceptController::class, 'pronadjiPoNazivu']);
-Route::get('/recept/kategorija', [ReceptController::class, 'namirnicePoKategoriji']);
+
 
 
 
@@ -135,3 +134,11 @@ Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logo
 //EXPORT 
 Route::get('/recepti/pdf', [ReceptController::class, 'exportToPdf']);
 
+
+//samo autentifikovanim 
+
+Route::middleware('auth')->group(function () {
+    Route::post('/namirnice/dodaj', [NamirnicaController::class, 'store']);
+    Route::delete('/namirnice/obrisi/{id}', [NamirnicaController::class, 'destroy']);
+    Route::put('/namirnice/izmeni/{id}', [NamirnicaController::class, 'update']);
+});
