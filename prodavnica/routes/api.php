@@ -53,8 +53,7 @@ Route::get('/namirnice/kategorija', [NamirnicaController::class, 'namirnicePoKat
 //KORISNIK
 
 Route::get('/korisnici', [KorisnikController::class, 'index']);
-Route::get('/namrinica/id', [KorisnikController::class, 'show']);
-Route::get('/namirnica/naziv', [NamirnicaController::class, 'pronadjiPoNaziv']);
+
 
 
 
