@@ -26,6 +26,7 @@ use App\Http\Controllers\API\AuthController;
 //KATEGORIJA NAMIRNICE
 
 Route::resource('/kategorijeNamirnica', KategorijaNamirniceController::class);
+Route::get('/kategorijaNamirnice/pronadjiPoNazivu',[KategorijaNamirniceController::class,'pronadjiPoNazivu']);
 
 
 //NAMIRNICA
@@ -33,21 +34,17 @@ Route::resource('/kategorijeNamirnica', KategorijaNamirniceController::class);
 Route::get('/korisnici', [KorisnikController::class, 'index']);
 Route::get('/korisnici/id', [KorisnikController::class, 'show']);
 
-Route::resource('/namirnice', NamirnicaController::class);
 
 
 
-
-Route::get('/kategorijaNamirnice/pronadjiPoNazivu',[KategorijaNamirniceController::class,'pronadjiPoNazivu']);
-
-
+//RECEPT
 Route::get('/recept/id',[ReceptController::class,'show']);
 Route::get('/recept/naziv', [ReceptController::class, 'pronadjiPoNazivu']);
 Route::get('/recept/kategorija', [ReceptController::class, 'namirnicePoKategoriji']);
 
 
 
-
+//AUTH
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -56,6 +53,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/kategorijaRecept', [KategorijaReceptController::class, 'index']);
 
 Route::get('/kategorijaRecept/id', [KategorijaReceptController::class, 'show']);
+
+Route::post('/kategorijaRecept/sacuvaj', [KategorijaReceptController::class, 'store']);
+
+Route::put('/kategorijaRecept/izmeni/{id}', [KategorijaReceptController::class, 'update']);
+
+Route::delete('/kategorijaRecept/obrisi/{id}', [KategorijaReceptController::class, 'destroy']);
 
 Route::get('/kategorijaRecept/naziv', [KategorijaReceptController::class, 'pronadjiPoNazivuKat']);
 
