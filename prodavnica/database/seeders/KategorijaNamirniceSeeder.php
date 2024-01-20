@@ -20,6 +20,7 @@ class KategorijaNamirniceSeeder extends Seeder
             ['naziv' => 'Mlečni proizvodi'],
             ['naziv' => 'Organska i zdrava hrana'],
             ['naziv' => 'Slatki i slani konditori'],
+            ['naziv' => 'Osnovne namirnice'],
             
         ]);
 

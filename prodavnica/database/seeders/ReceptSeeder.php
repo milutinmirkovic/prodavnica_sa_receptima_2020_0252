@@ -26,6 +26,16 @@ class ReceptSeeder extends Seeder
                
                 'kategorija_recepta_id' => 3
             ],
+            [
+                'naziv' => 'Krofne',
+                'tekst' => 'U mlako mleko (600 ml) izdrobiti kvasac, staviti 2 kašičice šećera i ostaviti da nadođe. Za to vreme, u većoj vanglici, umutiti 2 žumanca, dodati mast (ili ulje), šećer, so pa na kraju dodati i nadošli kvasac. Sve umešati pa postepeno dodavati brašno i mutiti. Zamesti testo srednje mekoće (važno da se ne lepi za ruke i radnu površinu). Tako umešeno testo ostaviti da odmori 20-30 minuta.
+                Posle 30-ak minuta testo ponovo malo premesiti bez dodavanja brašna i rastanjiti na debljinu manju od 1 cm (od prilike 7-8 mm).,
+                Čašom vaditi krofne, pa ostaviti da odstoje sa svake strane po 5 minuta. Za to vreme zagrejati ulje na umerenoj temperaturi. Pre prženja krofne još malo blago rastanjiti oklagijom i ostaviti da malo odmore.,
+                Kada se krofne stavljaju u ulje bitno je da ona strana koja je bila na stolu sada bude gore.,
+                Gotove krofne uvaljati u prah šećer i poslužiti tople :)',
+                'kategorija_recepta_id' => 3
+
+            ]
            
         ]);
     }

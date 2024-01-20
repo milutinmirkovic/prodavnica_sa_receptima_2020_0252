@@ -103,14 +103,14 @@ class NamirnicaSeeder extends Seeder
                 'opis' => 'Brašno tip 500',
                 'cena' => 50.99,
                 'velicina_pakovanja' => 1,
-                'kategorija_namirnica_id' => 5
+                'kategorija_namirnica_id' => 7
             ],
             [
                 'naziv' => 'Jaja',
                 'opis' => '10 svežih jaja',
                 'cena' => 234.99,
                 'velicina_pakovanja' => 1,
-                'kategorija_namirnica_id' => 4
+                'kategorija_namirnica_id' => 7
             ],
             
             [
@@ -118,8 +118,34 @@ class NamirnicaSeeder extends Seeder
                 'opis' => 'Suncokretovo ulje',
                 'cena' => 234.99,
                 'velicina_pakovanja' => 1,
-                'kategorija_namirnica_id' => 5
-            ]
+                'kategorija_namirnica_id' => 7
+            ],
+            [
+                'naziv' => 'Kvasac',
+                'opis' => 'Kesica kvasca',
+                'cena' => 52.99,
+                'velicina_pakovanja' => 0.01,
+                'kategorija_namirnica_id' => 7
+
+            ],
+            [
+                'naziv' => 'Šećer',
+                'opis' => 'Beli kristal šećer',
+                'cena' => 114.99,
+                'velicina_pakovanja' => 1,
+                'kategorija_namirnica_id' => 7
+
+            ],
+            [
+                'naziv' => 'So',
+                'opis' => 'Kuhinjska so kutija',
+                'cena' => 71.99,
+                'velicina_pakovanja' => 1,
+                'kategorija_namirnica_id' => 7
+
+            ],
+
+
             
         ]);
     }
