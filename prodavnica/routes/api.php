@@ -31,6 +31,25 @@ Route::get('/kategorijaNamirnice/pronadjiPoNazivu',[KategorijaNamirniceControlle
 
 //NAMIRNICA
 
+
+
+Route::post('/namirnice/dodaj', [NamirnicaController::class, 'store']); //radi
+Route::delete('/namirnice/obrisi/{id}', [NamirnicaController::class, 'destroy']); //radi
+Route::get('/namirnice', [NamirnicaController::class, 'index']); //raadi
+Route::get('/namirnice/nadjiID', [NamirnicaController::class, 'show']); //radi
+Route::get('/namirnice/naziv', [NamirnicaController::class, 'pronadjiPoNaziv']);//radi
+Route::get('/namirnice/kategorija', [NamirnicaController::class, 'namirnicePoKategoriji']);//radi
+Route::put('/namirnice/izmeni/{id}', [NamirnicaController::class, 'update']); //radi
+
+
+
+
+
+
+
+
+//KORISNIK
+
 Route::get('/korisnici', [KorisnikController::class, 'index']);
 Route::get('/namrinica/id', [KorisnikController::class, 'show']);
 Route::get('/namirnica/naziv', [NamirnicaController::class, 'pronadjiPoNaziv']);
@@ -48,6 +67,11 @@ Route::put('/recept/izmeni/{id}', [ReceptController::class, 'update']);//radi
 Route::delete('/recept/obrisi/{id}', [ReceptController::class, 'destroy']);//radi
 Route::get('/recept/namirnica', [ReceptController::class, 'pronadjiPoNamirnici']);//radi
 Route::get('/recept/dodaj', [ReceptController::class, 'dodajNamirniceUKorpu']);//radi
+Route::get('/recept/id',[ReceptController::class,'show']);
+Route::get('/recept/naziv', [ReceptController::class, 'pronadjiPoNazivu']);
+Route::get('/recept/kategorija', [ReceptController::class, 'namirnicePoKategoriji']);
+
+
 
 //AUTH
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -76,16 +100,24 @@ Route::get('/korpa/id', [KorpaController::class, 'show']);
 
 Route::get('/korpa/cena', [KorpaController::class, 'ukupnaCena']);
 
+Route::post('/korpa/napravi', [KorpaController::class, 'store']);
+
+Route::get('/korpa/prikaziKorpu', [KorpaController::class, 'prikaziKorpu']);
+
+Route::delete('/korpa/obrisi/{id}', [KorpaController::class, 'destroy']);
+
+
+
 //STAVKA KORPA
 Route::get('/stavkaKorpa', [StavkaKorpaController::class, 'index']);
 
 Route::get('/stavkaKorpa/id', [StavkaKorpaController::class, 'show']);
 
-Route::get('/stavkaKorpa/store', [StavkaKorpaController::class, 'store']);
+Route::post('/stavkaKorpa/napravi', [StavkaKorpaController::class, 'store']);
 
-Route::get('/stavkaKorpa/update', [StavkaKorpaController::class, 'update']);
 
-Route::get('/stavkaKorpa/destroy', [StavkaKorpaController::class, 'destroy']);
+
+Route::get('/stavkaKorpa/obrisi', [StavkaKorpaController::class, 'destroy']);
 
 //REGISTRACIJA
 Route::post('/registracija', [AuthController::class, 'registracija']);
