@@ -10,7 +10,7 @@ use App\Models\kategorija_namirnice;
 class NamirnicaController extends Controller
 {
 
-/*
+
     
     public function index()
     {
@@ -59,7 +59,7 @@ class NamirnicaController extends Controller
     {
         //
     }
-*/
+
     
     public function pronadjiPoNaziv(Request $request)
     {

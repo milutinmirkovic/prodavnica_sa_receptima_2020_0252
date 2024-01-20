@@ -44,8 +44,7 @@ class KategorijaReceptController extends Controller
 
     public function show(Request $request)
     {
-        
-        $id=$request->input('id');
+        $id=$request->id;
         $kategorija = kategorija_recept::find($id);
         if (!$kategorija) {
             return response()->json(['message' => 'Kategorija recepta nije pronađena'], 404);

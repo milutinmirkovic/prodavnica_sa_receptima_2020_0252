@@ -32,17 +32,22 @@ Route::get('/kategorijaNamirnice/pronadjiPoNazivu',[KategorijaNamirniceControlle
 //NAMIRNICA
 
 Route::get('/korisnici', [KorisnikController::class, 'index']);
-Route::get('/korisnici/id', [KorisnikController::class, 'show']);
+Route::get('/namrinica/id', [KorisnikController::class, 'show']);
+Route::get('/namirnica/naziv', [NamirnicaController::class, 'pronadjiPoNaziv']);
 
 
 
 
 //RECEPT
-Route::get('/recept/id',[ReceptController::class,'show']);
-Route::get('/recept/naziv', [ReceptController::class, 'pronadjiPoNazivu']);
-Route::get('/recept/kategorija', [ReceptController::class, 'namirnicePoKategoriji']);
-
-
+Route::get('/recept',[ReceptController::class,'index']);//radi
+Route::get('/recept/prikazi',[ReceptController::class,'show']);//radi
+Route::get('/recept/kategorija', [ReceptController::class, 'receptiPoKategoriji']);//radi
+Route::post('/recept/sacuvaj', [ReceptController::class, 'store']);//radi
+Route::get('/recept/naziv', [ReceptController::class, 'pronadjiPoNazivu']);//radi
+Route::put('/recept/izmeni/{id}', [ReceptController::class, 'update']);//radi
+Route::delete('/recept/obrisi/{id}', [ReceptController::class, 'destroy']);//radi
+Route::get('/recept/namirnica', [ReceptController::class, 'pronadjiPoNamirnici']);//radi
+Route::get('/recept/dodaj', [ReceptController::class, 'dodajNamirniceUKorpu']);//radi
 
 //AUTH
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -50,19 +55,19 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //KATEGORIJA RECEPT
-Route::get('/kategorijaRecept', [KategorijaReceptController::class, 'index']);
+Route::get('/kategorijaRecept', [KategorijaReceptController::class, 'index']);//radi
 
-Route::get('/kategorijaRecept/id', [KategorijaReceptController::class, 'show']);
+Route::get('/kategorijaRecept/pronadji', [KategorijaReceptController::class, 'show']);//radi
 
-Route::post('/kategorijaRecept/sacuvaj', [KategorijaReceptController::class, 'store']);
+Route::post('/kategorijaRecept/sacuvaj', [KategorijaReceptController::class, 'store']);//radi
 
-Route::put('/kategorijaRecept/izmeni/{id}', [KategorijaReceptController::class, 'update']);
+Route::put('/kategorijaRecept/izmeni/{id}', [KategorijaReceptController::class, 'update']);//radi
 
-Route::delete('/kategorijaRecept/obrisi/{id}', [KategorijaReceptController::class, 'destroy']);
+Route::delete('/kategorijaRecept/obrisi/{id}', [KategorijaReceptController::class, 'destroy']);//radi
 
-Route::get('/kategorijaRecept/naziv', [KategorijaReceptController::class, 'pronadjiPoNazivuKat']);
+Route::get('/kategorijaRecept/naziv', [KategorijaReceptController::class, 'pronadjiPoNazivuKat']);//radi
 
-Route::get('/kategorijaRecept/namirnica', [KategorijaReceptController::class, 'pronadjiPoNamirnici']);
+Route::get('/kategorijaRecept/namirnica', [KategorijaReceptController::class, 'pronadjiPoNamirnici']);//radi
 
 //KORPA
 Route::get('/korpa', [KorpaController::class, 'index']);
