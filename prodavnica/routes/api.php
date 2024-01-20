@@ -34,13 +34,14 @@ Route::get('/kategorijaNamirnice/pronadjiPoNazivu',[KategorijaNamirniceControlle
 
 
 
-Route::post('/namirnice/dodaj', [NamirnicaController::class, 'store']); //radi
-Route::delete('/namirnice/obrisi/{id}', [NamirnicaController::class, 'destroy']); //radi
+
+
 Route::get('/namirnice', [NamirnicaController::class, 'index']); //raadi
 Route::get('/namirnice/nadjiID', [NamirnicaController::class, 'show']); //radi
 Route::get('/namirnice/naziv', [NamirnicaController::class, 'pronadjiPoNaziv']);//radi
 Route::get('/namirnice/kategorija', [NamirnicaController::class, 'namirnicePoKategoriji']);//radi
-Route::put('/namirnice/izmeni/{id}', [NamirnicaController::class, 'update']); //radi
+
+
 
 
 
@@ -114,6 +115,8 @@ Route::get('/stavkaKorpa/id', [StavkaKorpaController::class, 'show']);
 
 Route::post('/stavkaKorpa/napravi', [StavkaKorpaController::class, 'store']);
 
+Route::delete('/stavkaKorpa/obrisi/{id}', [KorpaController::class, 'destroy']);
+
 
 
 Route::get('/stavkaKorpa/obrisi', [StavkaKorpaController::class, 'destroy']);
@@ -138,3 +141,10 @@ Route::post('/stavkaRecept/sacuvaj', [StavkaReceptController::class, 'store']);
 Route::get('/stavkaRecept/prikazi', [StavkaReceptController::class, 'show']);
 Route::put('/stavkaRecept/izmeni/{id}', [StavkaReceptController::class, 'update']);
 Route::delete('/stavkaRecept/izbrisi/{id}', [StavkaReceptController::class, 'destroy']);
+//samo autentifikovanim 
+
+Route::middleware('auth')->group(function () {
+    Route::post('/namirnice/dodaj', [NamirnicaController::class, 'store']);
+    Route::delete('/namirnice/obrisi/{id}', [NamirnicaController::class, 'destroy']);
+    Route::put('/namirnice/izmeni/{id}', [NamirnicaController::class, 'update']);
+});
