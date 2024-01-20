@@ -58,10 +58,10 @@ class StavkaKorpaController extends Controller
     
 
   
-    public function destroy(Request $request)
+    public function destroy($id)
     {
         
-        $id=$request->id;
+        $id;
         stavka_korpa::destroy($id);
         return response()->json(null, 204);
     }

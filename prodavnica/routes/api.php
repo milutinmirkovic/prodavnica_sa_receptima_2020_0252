@@ -103,6 +103,8 @@ Route::get('/stavkaKorpa/id', [StavkaKorpaController::class, 'show']);
 
 Route::post('/stavkaKorpa/napravi', [StavkaKorpaController::class, 'store']);
 
+Route::delete('/stavkaKorpa/obrisi/{id}', [KorpaController::class, 'destroy']);
+
 
 
 Route::get('/stavkaKorpa/obrisi', [StavkaKorpaController::class, 'destroy']);
