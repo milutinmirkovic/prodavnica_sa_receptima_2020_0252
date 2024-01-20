@@ -96,6 +96,7 @@ class ReceptController extends Controller
 
     // Prikaz svih recepta koji sadrže određenu namirnicu
     public function findByNamirnica($namirnicaId)
+    
     {
         $recepti = recept::whereHas('stavkaRecept', function ($query) use ($namirnicaId) {
             $query->where('namirnica_id', $namirnicaId);

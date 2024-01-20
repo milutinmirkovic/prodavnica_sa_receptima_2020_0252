@@ -27,24 +27,9 @@ use App\Http\Controllers\API\AuthController;
 Route::get('/korisnici', [KorisnikController::class, 'index']);
 Route::get('/korisnici/id', [KorisnikController::class, 'show']);
 
-// Get all namirnice
-Route::get('/namirnice', [NamirnicaController::class, 'index']);
+Route::resource('/namirnice', NamirnicaController::class);
 
-// Store a new namirnica
-Route::post('/namirnice', [NamirnicaController::class, 'store']);
 
-// Get a specific namirnica by id
-Route::get('/namirnice/id', [NamirnicaController::class, 'show']);
-
-// Update a specific namirnica
-Route::put('/namirnice/{namirnica}', [NamirnicaController::class, 'update']);
-
-// Delete a specific namirnica
-Route::delete('/namirnice/{namirnica}', [NamirnicaController::class, 'destroy']);
-
-// Find namirnica by name
-Route::get('/namirnice/pronadji', [NamirnicaController::class, 'pronadjiPoNaziv']);
-Route::get('/namirnice/kategorija', [NamirnicaController::class, 'namirnicePoKategoriji']);
 
 
 Route::get('/kategorijaNamirnice/pronadjiPoNazivu',[KategorijaNamirniceController::class,'pronadjiPoNazivu']);
