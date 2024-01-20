@@ -17,7 +17,10 @@ class NamirnicaController extends Controller
     {
         
         $namirnice = namirnica::all();
-        return response()->json($namirnice);
+        //return response()->json($namirnice);
+        $namirnice = namirnica::paginate(10); // 10 users per page
+
+        return view('paginacija', ['namirnice' => $namirnice]);
     }
 
     public function show(Request $request)
@@ -143,5 +146,25 @@ class NamirnicaController extends Controller
         }
 
         return response()->json($namirnice);
+    }
+
+    public function filtriraj(Request $request)
+    {
+        $query = namirnica::query();
+
+        // Dodajte uslove filtriranja prema potrebama
+        if ($request->has('cena_min')) {
+            $query->where('cena', '>=', $request->input('cena_min'));
+        }
+
+        if ($request->has('cena_max')) {
+            $query->where('cena', '<=', $request->input('cena_max'));
+        }
+
+        // Dodajte dodatne uslove prema potrebama
+
+        $filteredNamirnice = $query->get();
+
+        return response()->json(['namirnice' => $filteredNamirnice]);
     }
 }

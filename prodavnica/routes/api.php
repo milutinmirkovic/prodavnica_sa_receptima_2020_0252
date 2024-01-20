@@ -148,3 +148,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/namirnice/obrisi/{id}', [NamirnicaController::class, 'destroy']);
     Route::put('/namirnice/izmeni/{id}', [NamirnicaController::class, 'update']);
 });
+
+
+
+Route::get('/10namirnica', [NamirnicaController::class, 'index']);
+Route::get('/namirnice/filtriraj', [NamirnicaController::class, 'filtriraj']);
