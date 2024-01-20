@@ -6,12 +6,12 @@ use App\Models\kategorija_recept;
 use Illuminate\Http\Request;
 use App\Models\recept;
 use App\Models\namirnica;
+use Validator;
+use App\Http\Resources\KategorijaReceptResource;
 
 class KategorijaReceptController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+ 
     public function index()
     {
         //
@@ -19,28 +19,32 @@ class KategorijaReceptController extends Controller
         return response()->json($kategorije);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'naziv' => 'required|string|max:255', 
+        ]);
+
+        
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400); 
+        }
+
+        
+        $kategorija = new kategorija_recept();
+        $kategorija->naziv = $request->naziv;
+       
+        $kategorija->save();
+
+       
+        return response()->json(['Uspešno kreirana nova kategorija recepta!',
+            'kategorija' => $kategorija], 201); 
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Request $request)
     {
-        //
+        
         $id=$request->input('id');
         $kategorija = kategorija_recept::find($id);
         if (!$kategorija) {
@@ -50,28 +54,36 @@ class KategorijaReceptController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(kategorija_recept $kategorija_recept)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, kategorija_recept $kategorija_recept)
+    public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'naziv' => 'required|string|max:255', 
+            
+           
+        ]);
+       
+        if ($validator->fails()) {
+           
+            return response()->json($validator->errors());
+        }
+    
+        $kategorija = kategorija_recept::findOrFail($id);
+    
+        $kategorija->naziv = $request->naziv;
+      
+    
+        $kategorija->save();
+    
+        return response()->json(['Uspešno izmenjena kategorija recepta!', new KategorijaReceptResource($kategorija)]);
     }
+    
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(kategorija_recept $kategorija_recept)
+    public function destroy($id)
     {
-        //
+        $kat = kategorija_recept::findOrFail($id);
+        $kat->delete();
+        return response()->json('Uspešno obrisana kategorija recepta!');
     }
 
     // Pronalaženje kategorije recepta po nazivu

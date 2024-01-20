@@ -61,7 +61,7 @@ Route::get('/recept/kategorija', [ReceptController::class, 'namirnicePoKategorij
 
 
 
-
+//AUTH
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -70,6 +70,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/kategorijaRecept', [KategorijaReceptController::class, 'index']);
 
 Route::get('/kategorijaRecept/id', [KategorijaReceptController::class, 'show']);
+
+Route::post('/kategorijaRecept/sacuvaj', [KategorijaReceptController::class, 'store']);
+
+Route::put('/kategorijaRecept/izmeni/{id}', [KategorijaReceptController::class, 'update']);
+
+Route::delete('/kategorijaRecept/obrisi/{id}', [KategorijaReceptController::class, 'destroy']);
 
 Route::get('/kategorijaRecept/naziv', [KategorijaReceptController::class, 'pronadjiPoNazivuKat']);
 
