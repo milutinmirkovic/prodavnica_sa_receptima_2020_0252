@@ -17,25 +17,8 @@ class KorisnikController extends Controller
         return response()->json($korisnici);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Request $request)
     {
         $id = $request->input('id');
@@ -46,28 +29,53 @@ class KorisnikController extends Controller
         return response()->json($korisnik);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(korisnik $korisnik)
+
+
+    
+
+    
+    public function store(Request $request)
     {
-        //
+        
+
+
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    
+    
     public function update(Request $request, korisnik $korisnik)
     {
-        //
+         // Validacija zahteva
+    $validator = Validator::make($request->all(), [
+        'Ime' => 'string|max:255',
+        'Prezime' => 'string|max:255',
+        'Adresa' => 'string|max:255',
+        'broj_telefona' => 'string|max:255',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json($validator->errors(), 400); // Vraćanje grešaka u validaciji
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Pronalaženje postojećeg korisnika
+    $korisnik = korisnik::findOrFail($id);
+
+    // Ažuriranje atributa korisnika
+    $korisnik->Ime = $request->Ime;
+    $korisnik->Prezime = $request->Prezime;
+    $korisnik->Adresa = $request->Adresa;
+    $korisnik->broj_telefona = $request->broj_telefona;
+
+    // Čuvanje promena
+    $korisnik->save();
+
+    return response()->json(['message' => 'Korisnik uspešno ažuriran!', 'korisnik' => $korisnik]);
+    }
+
+    
     public function destroy(korisnik $korisnik)
     {
-        //
+        
     }
 
 

@@ -26,19 +26,33 @@ use App\Http\Controllers\API\AuthController;
 //KATEGORIJA NAMIRNICE
 
 Route::resource('/kategorijeNamirnica', KategorijaNamirniceController::class);
+Route::get('/kategorijaNamirnice/pronadjiPoNazivu',[KategorijaNamirniceController::class,'pronadjiPoNazivu']);
 
 
 //NAMIRNICA
 
+
+
+Route::post('/namirnice/dodaj', [NamirnicaController::class, 'store']); //radi
+Route::delete('/namirnice/obrisi/{id}', [NamirnicaController::class, 'destroy']); //radi
+Route::get('/namirnice', [NamirnicaController::class, 'index']); //raadi
+Route::get('/namirnice/nadjiID', [NamirnicaController::class, 'show']); //radi
+Route::get('/namirnice/naziv', [NamirnicaController::class, 'pronadjiPoNaziv']);//radi
+Route::get('/namirnice/kategorija', [NamirnicaController::class, 'namirnicePoKategoriji']);//radi
+Route::put('/namirnice/izmeni/{id}', [NamirnicaController::class, 'update']); //radi
+
+
+
+
+
+
+
+
+//KORISNIK
+
 Route::get('/korisnici', [KorisnikController::class, 'index']);
 Route::get('/korisnici/id', [KorisnikController::class, 'show']);
 
-Route::resource('/namirnice', NamirnicaController::class);
-
-
-
-
-Route::get('/kategorijaNamirnice/pronadjiPoNazivu',[KategorijaNamirniceController::class,'pronadjiPoNazivu']);
 
 
 Route::get('/recept/id',[ReceptController::class,'show']);

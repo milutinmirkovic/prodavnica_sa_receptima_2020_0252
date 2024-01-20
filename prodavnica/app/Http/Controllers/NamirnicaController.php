@@ -5,33 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\namirnica;
 use Illuminate\Http\Request;
 use App\Models\kategorija_namirnice;
+use Validator;
 
 
 class NamirnicaController extends Controller
 {
 
-/*
+
     
     public function index()
     {
-        //
+        
         $namirnice = namirnica::all();
         return response()->json($namirnice);
     }
 
-  
-    public function create()
-    {
-        //
-    }
-
-    
-    public function store(Request $request)
-    {
-        //
-    }
-
-   
     public function show(Request $request)
     {
         $id = $request->id;
@@ -43,55 +31,112 @@ class NamirnicaController extends Controller
     }   
 
   
-    public function edit(namirnica $namirnica)
+    
+    public function store(Request $request)
     {
-        //
-    }
+        $validator = Validator::make($request->all(), [
+            '   ' => 'required|string|max:255', 
+            'opis' => 'required|string|max:255', 
+            'cena' => 'required|numeric', 
+            'velicina_pakovanja' => 'required|integer', 
+            'kategorija_namirnica_id'=> 'required|integer'
 
+        ]);
+
+        
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400); 
+        }
+
+        
+        $namirnica = new namirnica();
+        $namirnica->naziv = $request->naziv;
+        $namirnica->opis = $request->opis;
+        $namirnica->cena = $request->cena;
+        $namirnica->velicina_pakovanja = $request->velicina_pakovanja;
+        $namirnica->kategorija_namirnica_id = $request->kategorija_namirnica_id;
+       
+        $namirnica->save();
+
+       
+        return response()->json(['Uspešno kreirana nova namirnica!',
+            'namirnica' => $namirnica], 201); 
+    }
    
-    public function update(Request $request, namirnica $namirnica)
+
+
+
+
+    public function update(Request $request, $id )
     {
-        //
+        
+        $validator = Validator::make($request->all(), [
+            'naziv' => 'string|max:255', 
+            'opis' => 'string|max:255', 
+            'cena' => 'numeric', 
+            'velicina_pakovanja' => 'integer', 
+            'kategorija_namirnica_id' => 'integer'
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+    
+        $namirnica = namirnica::find($id);
+        if (!$namirnica) {
+            return response()->json(['message' => 'Namirnica nije pronađena'], 404);
+        }
+    
+        $namirnica->update($request->all());
+    
+        return response()->json(['message' => 'Uspešno ažurirana namirnica', 'namirnica' => $namirnica], 200);
+    
+
+
+
+
     }
 
     
-    public function destroy(namirnica $namirnica)
-    {
-        //
-    }
-*/
+
+
+    public function destroy($id)
+{
+    $nam = namirnica::findOrFail($id);
+    $nam->delete();
+    return response()->json('Uspešno obrisana namirnica!');
+}
+
+
     
+
+
     public function pronadjiPoNaziv(Request $request)
     {
+       
         $naziv = $request->naziv;
-        $namirnice = namirnica::where('naziv', 'like', '%' . $naziv . '%')->get();
-        if ($namirnice->isEmpty()) {
+        $namirnice = namirnica::where('naziv',$naziv )->first();
+        if (!$namirnice) {
             return response()->json(['message' => 'Nema namirnica sa datim nazivom'], 404);
         }
         return response()->json($namirnice);
     }
 
+
+
+
+
     public function namirnicePoKategoriji(Request $request)
     {
-        $nazivKategorije = $request->input('naziv_kategorije');
-
-       
+        $nazivKategorije = $request->input('naziv');
 
         if (!$nazivKategorije) {
             return response()->json(['message' => 'Nije unet naziv kategorije'], 400);
         }
 
-      /*  $kategorija = kategorija_namirnice::whereHas('kategorijaNamirnica', function($query) use ($nazivKategorije){
-            $query->where('naziv', 'like', '%' . $nazivKategorije . '%');
-        })->get();
-        */
         $kategorija = kategorija_namirnice::where('naziv', 'like', '%' . $nazivKategorije . '%')->first();
         $idKat = $kategorija->id;
-
-       /* $namirnice = namirnica::whereHas('kategorija_namirnica_id', function ($query) use ($idKat) {
-            $query->where('kategorija_namirnica_id', 'like', '%' . $idKat . '%');
-        })->get();
-*/
+        
         $namirnice = namirnica::where('kategorija_namirnica_id', $kategorija->id)->get();
         if ($namirnice->isEmpty()) {
             return response()->json(['message' => 'Nema namirnica u kategoriji ' . $nazivKategorije], 404);
