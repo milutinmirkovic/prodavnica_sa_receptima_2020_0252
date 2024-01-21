@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\korisnik;
 
 
+
 class AuthController extends Controller
 {
     //
@@ -82,5 +83,10 @@ class AuthController extends Controller
     {
         auth()->user()->tokens()->delete();
         return response()->json('Uspesan logout korisnika.');
+    }
+    public function prikazPoruke()
+    {
+        return response()->json('Morate biti ulogovani korisnik');
+
     }
 }

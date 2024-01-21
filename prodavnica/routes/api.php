@@ -124,7 +124,9 @@ Route::get('/stavkaKorpa/obrisi', [StavkaKorpaController::class, 'destroy']);
 Route::post('/registracija', [AuthController::class, 'registracija']);
 
 //LOGIN
-Route::post('/login', [AuthController::class, 'login']);
+
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+
 
 //LOGOUT
 //Route::post('/logout', [AuthController::class, 'logout']);
@@ -142,12 +144,17 @@ Route::put('/stavkaRecept/izmeni/{id}', [StavkaReceptController::class, 'update'
 Route::delete('/stavkaRecept/izbrisi/{id}', [StavkaReceptController::class, 'destroy']);
 //samo autentifikovanim 
 
-Route::middleware('auth')->group(function () {
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+
     Route::post('/namirnice/dodaj', [NamirnicaController::class, 'store']);
     Route::delete('/namirnice/obrisi/{id}', [NamirnicaController::class, 'destroy']);
     Route::put('/namirnice/izmeni/{id}', [NamirnicaController::class, 'update']);
 });
 
+
+
+Route::get('/greska', [AuthController::class, 'prikazPoruke'])->name('poruka');
 
 
 Route::get('/10namirnica', [NamirnicaController::class, 'index']);

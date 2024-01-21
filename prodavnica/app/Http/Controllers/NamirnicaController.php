@@ -62,8 +62,8 @@ class NamirnicaController extends Controller
         $namirnica->save();
 
        
-        return response()->json(['Uspešno kreirana nova namirnica!',
-            'namirnica' => $namirnica], 201); 
+        return response()->json(['message' => 'Uspešno kreirana nova namirnica', 'namirnica' => $namirnica], 201);
+
     }
    
 
@@ -152,7 +152,7 @@ class NamirnicaController extends Controller
     {
         $query = namirnica::query();
 
-        // Dodajte uslove filtriranja prema potrebama
+        
         if ($request->has('cena_min')) {
             $query->where('cena', '>=', $request->input('cena_min'));
         }
@@ -161,7 +161,7 @@ class NamirnicaController extends Controller
             $query->where('cena', '<=', $request->input('cena_max'));
         }
 
-        // Dodajte dodatne uslove prema potrebama
+        
 
         $filteredNamirnice = $query->get();
 
