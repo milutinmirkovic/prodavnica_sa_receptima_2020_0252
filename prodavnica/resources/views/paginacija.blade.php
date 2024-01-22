@@ -15,7 +15,7 @@
         <p>{{ $namirnica->naziv}}</p>
         <p>Cena: {{ $namirnica->cena }}</p>
         <p>Opis: {{ $namirnica->opis }}</p>
-        <hr> {{-- Dodajte horizontalnu liniju između svake namirnice za bolju čitljivost --}}
+        <hr> 
     @endforeach
 </body>
 </html>

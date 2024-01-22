@@ -15,8 +15,8 @@ class KategorijaNamirniceRecource extends JsonResource
     public function toArray(Request $request): array
     {
        return [
-            'ID kategorije namirnice: ' => $this->id,
-            'Naziv kategorije namirnice: ' => $this->naziv,
+            'ID kategorije namirnice: ' => $this->resource->id,
+            'Naziv kategorije namirnice: ' => $this->resource->naziv,
             
         ];
     }

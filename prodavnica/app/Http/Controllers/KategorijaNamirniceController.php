@@ -14,7 +14,9 @@ class KategorijaNamirniceController extends Controller
     {
        
         $kategorije = kategorija_namirnice::all();
-        return response()->json($kategorije);
+       // return response()->json($kategorije);
+
+        return KategorijaNamirniceRecource::collection($kategorije);
     }
  
    
