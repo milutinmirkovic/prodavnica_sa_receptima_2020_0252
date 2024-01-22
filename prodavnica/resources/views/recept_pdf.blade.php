@@ -7,6 +7,6 @@
 <body>
     <h1>{{ $recept->naziv }}</h1>
     <p>{{ $recept->tekst }}</p>
-    {{-- Dodajte ostale delove recepta kako je potrebno --}}
+   
 </body>
 </html>
